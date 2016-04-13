@@ -1,0 +1,25 @@
+	public HuffmanTree(int[] count){
+		//intializing the main priorityQueue
+		 PriorityQueue<HuffmanNode> sorted = new PriorityQueue(count.length);
+		
+		//adding everything into a priorityqueue
+		for (int i = 0; i < count.length; i++) {
+			if (!(count[i] < 1)){
+				sorted.add(new HuffmanNode(i, count[i]));
+			}
+		}
+		
+		//combine:
+		while (sorted.size() > 1) {
+			HuffmanNode first = sorted.remove();
+			HuffmanNode second = sorted.remove();
+			HuffmanNode newNode = new HuffmanNode(first.counts+second.counts, first, second);
+			//note: it doesn't matter which node is on the left or right because they will eventually be on the same level with same # of bits
+			
+			//add the new node back to the p-queue:
+			sorted.add(newNode);
+		}
+		overallRoot = sorted.peek();
+		
+		printPreorder(overallRoot);
+	}
